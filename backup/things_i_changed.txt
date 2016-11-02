@@ -1,0 +1,2 @@
+* adding wifi to /etc/wpa_supplicant/wpa_supplicant.conf
+* switched network in /etc/network/interfaces
