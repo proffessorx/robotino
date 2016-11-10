@@ -1,0 +1,42 @@
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+  address 10.10.0.1
+  netmask 255.255.255.0
+
+# The primary network interface (fallback)
+auto eth0:10
+iface eth0:10 inet static
+  address 172.27.1.1
+  netmask 255.255.0.0
+
+# WLAN ################################################
+# Schnittstelle prüfen
+pre-up ifconfig wlan0 up
+pre-up ifconfig wlan0 down
+pre-up ifconfig wlan0 up
+
+allow-hotplug wlan0
+# Mehrfachkonfiguration aktivieren
+iface wlan0 inet manual
+  # Roaming aktivieren
+  wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+
+# wifi nevs (HPE Schweden)
+iface nevs inet dhcp
+
+# wifi Applikationszentrum                   
+#iface apz inet dhcp
+
+# wifi 42                 
+iface 42 inet dhcp
+
+# wifi 0815                   
+#iface 0815 inet dhcp
+
+# Optional - Schnittstelle automatisch aktivieren
+auto wlan0
