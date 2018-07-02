@@ -4,11 +4,14 @@
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
-from geometry_msgs.msg import PoseWithCovarianceStamped, Quaternion
+from geometry_msgs.msg import PoseWithCovarianceStamped, Quaternion, Pose
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 from math import radians, degrees
 import time
+import os
+import os.path
 
+DIR = '/home/robotino/Desktop/Robotino/00_Sig2_Robotino'
 def create_nav_goal(x, y, yaw):
     
     mb_goal = MoveBaseGoal()
@@ -31,6 +34,20 @@ def callback_pose(data):
                                              data.pose.pose.orientation.z,
                                              data.pose.pose.orientation.w])
     rospy.loginfo("Current robot pose: x=" + str(x) + "y=" + str(y) + " yaw=" + str(degrees(yaw)) + "º")
+    
+    global a
+    global b
+    a = x
+    b = y
+
+# Messfahrt Starten
+
+YEAR = time.strftime("%Y")
+MONTH = time.strftime("%m")
+DAY = time.strftime("%d")
+HOUR = time.strftime("%H")
+MINUTE = time.strftime("%M")
+SECOND = time.strftime("%S")
 
 if __name__=='__main__':
     
@@ -51,7 +68,9 @@ if __name__=='__main__':
     rospy.init_node("navigation_snippet")
     #clear_costmaps = rospy.ServiceProxy('move_base/clear_costmaps', Empty)
     for i in range(ctr):
-        
+	print i
+        print x[i]
+	print y[i]
         rospy.Subscriber("/amcl_pose", PoseWithCovarianceStamped, callback_pose)
         nav_as = actionlib.SimpleActionClient('/move_base', MoveBaseAction)
         rospy.loginfo("Connecting to /move_base AS...")
@@ -59,9 +78,10 @@ if __name__=='__main__':
         rospy.loginfo("Connected.")
 
         rospy.loginfo("Creating navigation goal...")
-        nav_goal = create_nav_goal(float(5.45950520204), float(-15.5655174317), float(0))
+        nav_goal = create_nav_goal(float(x[i]), float(y[i]), float(0))
         rospy.loginfo("Sending goal to x ...")
-    
+    	print "Fahrt zu Zielposition:", i
+
         nav_as.send_goal(nav_goal)
         rospy.loginfo("Waiting for result...")
         nav_as.wait_for_result()
@@ -70,7 +90,28 @@ if __name__=='__main__':
         rospy.loginfo("Done!")
         print "Result: ", str(nav_res) 
         print "Nav state: ", str(nav_state)
-	# place delay here!!!
-	time.sleep(10)
-    rospy.loginfo("Done!All points traversed")
 
+	print "Ankunft an Zielposition:", i
+	# Signal an Messrechner senden, sodass Messung beginnen kann
+	open("/home/robotino/Desktop/Robotino/MessrechnerSim/" + time.strftime("%Y%m%d_%H%M%S") + ".txt", 'w')
+	# Anzahl bestimmen
+	anzahl_dateien_var = len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))])	
+	time.sleep(1)
+	# If Scchleife
+
+	while True:
+		
+		# Standortdaten speichern
+		f = open("/home/robotino/Desktop/Robotino/Standortdaten/" + YEAR + MONTH + DAY + "_" + HOUR + MINUTE + SECOND + "_Messung_V1.txt", 'a+')
+		callback_pose		
+		f.write(time.strftime("%d") + "." + time.strftime("%m") +"." + time.strftime("%Y") + ";" + time.strftime("%H") + ":" + time.strftime("%M") + ":" + time.strftime("%S") + ";" + str(b) + ";" + str(b) + "\n")
+		
+		if anzahl_dateien_var == len([name for name in os.listdir(DIR) if os.path.isfile(os.path.join(DIR, name))]):	
+			time.sleep(1)
+	
+		else:
+		
+			break 
+	
+rospy.loginfo("Done!All points traversed")
+print "Alle Zielpositionen erfolgreich angefahren"

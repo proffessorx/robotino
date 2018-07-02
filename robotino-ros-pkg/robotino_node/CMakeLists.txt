@@ -180,6 +180,17 @@ target_link_libraries(
   ${catkin_LIBRARIES}
 )
 
+add_executable(simple_navigation_goals src/simple_navigation_goals.cpp)
+
+target_link_libraries(
+  simple_navigation_goals 
+  ${catkin_LIBRARIES})
+
+add_executable(vfk_navigation_goal src/vfk_navigation_goal.cpp)
+
+target_link_libraries(
+  vfk_navigation_goal 
+  ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

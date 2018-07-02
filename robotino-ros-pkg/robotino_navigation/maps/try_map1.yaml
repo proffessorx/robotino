@@ -1,6 +1,6 @@
-image: new_map_iff.pgm
+image: try_map1.pgm
 resolution: 0.050000
-origin: [-39.200000, -63.200000, 0.000000]
+origin: [-20.000000, -34.400000, 0.000000]
 negate: 0
 occupied_thresh: 0.65
 free_thresh: 0.196
