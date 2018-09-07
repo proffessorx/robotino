@@ -1,6 +1,11 @@
 <launch>
-  <arg name="map_file" value="$(find robotino_navigation)/maps/Demo2.yaml" />
+  
+  <!--- Config -->
+  <arg name="robot" default="$(env ROBOT)" />
 
+  <arg name="map_file" value="$(find robotino_navigation)/maps/$(arg robot)/set_temp.yaml" />
+
+  <!---arg name="map_file" value="$(find robotino_navigation)/maps/$(arg robot)/Demo2.yaml" /-->
   <!--- Run mapserver -->
   <include file="$(find robotino_navigation)/launch/map_server.launch">
     <arg name="map_file" value="$(arg map_file)" />
