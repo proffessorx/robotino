@@ -1,5 +1,5 @@
 EBandPlannerROS:  
-  max_vel_lin: 0.74
+  max_vel_lin: 0.3 #0.74
   max_vel_th: 0.5
 
   min_vel_lin: 0.0
@@ -31,9 +31,9 @@ EBandPlannerROS:
   differential_drive: false
 
 DWAPlannerROS:
-  acc_lim_th: 3.2
-  acc_lim_x: 2.5
-  acc_lim_y: 2.5
+  acc_lim_th: 1.0 # 3.2
+  acc_lim_x: 1.0  # 2.5
+  acc_lim_y: 1.0  # 2.5
 
   max_vel_x: 0.3
   min_vel_x: -0.005
@@ -44,14 +44,14 @@ DWAPlannerROS:
   max_trans_vel: 0.3
   min_trans_vel: 0.01
 
-  max_rot_vel: 0.8
-  min_rot_vel: -0.8
+  max_rot_vel: 0.5  # 0.8
+  min_rot_vel: -0.5 # -0.8
 
 #param for rotating behaviour
 #max_rotational_vel: 0.04
 #min_in_place_rotational_vel: 0.1
 
-  sim_time: 1.7
+  sim_time: 1.0 # 1.7
   sim_granularity: 0.025
 
   goal_distance_bias: 32.0

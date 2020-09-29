@@ -4,13 +4,7 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /RobotModel1/Status1
-        - /LaserScan1/Status1
-        - /TF1
-        - /TF1/Status1
-        - /TF1/Tree1/map1
-        - /TF1/Tree1/map1/odom1
-        - /TF1/Tree1/map1/odom1/base_link1
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 257
   - Class: rviz/Tool Properties
@@ -221,7 +215,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.00999999978
+      Size (m): 0.0299999993
       Style: Flat Squares
       Topic: /scan
       Unreliable: false
@@ -239,11 +233,15 @@ Visualization Manager:
           Value: true
         command_bridge_link:
           Value: true
+        kinect_link:
+          Value: true
         laser_link:
           Value: true
         map:
           Value: true
         odom:
+          Value: true
+        platform_link:
           Value: true
         wheel0_link:
           Value: true
@@ -264,7 +262,11 @@ Visualization Manager:
                 {}
               command_bridge_link:
                 {}
+              kinect_link:
+                {}
               laser_link:
+                {}
+              platform_link:
                 {}
               wheel0_link:
                 {}

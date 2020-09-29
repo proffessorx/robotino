@@ -1,5 +1,5 @@
 odom_model_type: 'omni'
-transform_tolerance: 0.2
+transform_tolerance: 0.5 # 0.2
 gui_publish_rate: -1.0
 laser_max_beams: 30
 laser_max_range: 29.5
